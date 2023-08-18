@@ -1,0 +1,24 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo-rails": "^7.2.5",
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
+    "bootstrap-datepicker": "^1.9.0",
+    "bootstrap-datetimepicker": "^0.0.7",
+    "bootstrap-icons": "^1.10.3",
+    "chart.js": "^4.3.0",
+    "chartjs-chart-treemap": "^2.3.0",
+    "esbuild": "^0.19.2",
+    "expose-loader": "^4.0.0",
+    "jquery": "^3.6.3",
+    "jszip": "^3.10.1",
+    "sass": "^1.58.0"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  }
+}
