@@ -1,0 +1,48 @@
+<% data_present = dates.present? %>
+<% if data_present %>
+    <table class="table" id="booking_details_table">
+        <tr>
+            <th class="bg-light-blue">
+                Date
+            </th>
+            <% dates.each{|date_| %>
+                <th class="bg-light-blue-1"><%= date_.strftime("%a, %d %b") %></th>
+            <% } %>
+
+        </tr>
+        <% room_types.each{|room_type| %>
+            <tr>
+                <td class="bg-light-blue">
+                    <%= room_type %>
+                </td>
+                <% room_status = available_status[room_type] || {} %>
+                <% dates.each{|date_| %>
+                    <td class="bg-light-blue-1"><%= room_status[date_.strftime("%F")] || 0 %></td>
+                <% } %>
+            </tr>
+        <% } %>
+    </table>
+<% else %>
+    <table class="table table-bordered align-middle" id="booking_details_table">
+        <tr>
+            <th class="bg-light-blue">
+                Date
+            </th>
+            <% 7.times do %>
+                <th class="bg-light-blue-1"></th>
+            <% end %>
+
+        </tr>
+        <% room_types.each{|room_type| %>
+            <tr>
+                <td class="bg-light-blue">
+                    <%= room_type %>
+                </td>
+                <% 7.times do %>
+                    <td class="bg-light-blue-1"></td>
+                <% end %>
+            </tr>
+        <% } %>
+    </table>
+
+<% end %>

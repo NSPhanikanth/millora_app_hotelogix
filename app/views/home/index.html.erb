@@ -1,14 +1,283 @@
-<%= link_to "Sign out", destroy_user_session_path, class: 'btn btn-secondary', style:'position: absolute; right: 10px; top: 0px', :method => :delete %>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style type="text/css">
+/*#booking_details_table th {
+  vertical-align: middle;
+  text-align: center;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
 
-<div class="row mt-5 text-center">
-    <h1 class="blue-text">Select a Card</h1>
-    <div class="row">
-        <div class="col-2 col-xxl-12">
-            <div class="card">
-                <div class="card-body">
-                    This is some text within a card body.
+#booking_details_table th:first-child {
+  vertical-align: middle !important;
+  text-align: center;
+  transform: rotate(0deg);
+  -webkit-writing-mode: horizontal-tb;
+  -ms-writing-mode: horizontal-tb;
+}*/
+
+</style>
+<div class="row text-center bg-blue" style="height: 10%;">
+    <div class="col-3 bg-white">
+    </div>
+    <div class="col-6 text-white d-flex justify-content-center align-items-center">
+        <h4 class="mb-0">Millora Corporate Managed Residence</h4>
+    </div>
+    <div class="col-3 bg-white">
+    </div>
+</div>
+<div class="row text-center p-5 bg-white">
+    <div class="card p-4 bg-gray">
+        <div class="card bg-white mb-3">
+            <div class="row justify-content-center p-2">
+                <div class="col-12 py-2">
+                    <h5 class="text-blue">Check Availability</h5>
+                </div>
+                <div class="col-12 py-2 d-flex justify-content-between">
+                    <div class="flex-fill px-3 d-flex justify-content-center">
+                        <%= select_tag("city", options_for_select(@properties.keys), class: "form-select user_input", prompt: "Select City", style: "min-width: 180px", onchange: "updatePropertyDropdown()") %>
+                    </div>
+                    <div class="flex-fill px-3 d-flex justify-content-center">
+                        <%= select_tag("property", options_for_select([]), class: "form-select user_input", prompt: "Select Property", style: "min-width: 180px") %>
+                    </div>
+                    <div class="flex-fill px-3 d-flex justify-content-center">
+                        <%= text_field_tag("checkin", nil, class: "form-control datepicker user_input", placeholder: "Select Check In", readonly: true, style: "min-width: 180px") %>
+                    </div>
+                    <div class="flex-fill px-3 d-flex justify-content-center">
+                        <%= text_field_tag("checkout", nil, class: "form-control datepicker user_input", placeholder: "Select Check Out", readonly: true, style: "min-width: 180px") %>
+                    </div>
+                    <div class="flex-fill px-3 d-flex justify-content-center">
+                        <%= submit_tag("Submit", class: "btn btn-secondary", style: "min-width: 180px", id: "submit_btn", onclick: "submitForm()") %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card bg-white">
+            <div class="row justify-content-center p-2">
+                <div class="col-12 py-2" id="bookings_table_div">
+                    <%= render 'booking_details_table', room_types: @room_types, available_status: {}, dates: [] %>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<%= hidden_field_tag("properties_json", @properties.to_json) %>
+<div class="row d-flex text-center bg-white align-items-center w-100" style="height: 10%; position: absolute; bottom: 0px;">
+    <div class="col-12">
+        <%= link_to "Logout", destroy_user_session_path, style: 'color: #000', :method => :delete %>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'D, dd M, yyyy',
+            startDate: 'Tue, 01 Aug, 2023',
+            autoclose: true
+        });
+        $('.user_input').on('change', function(){
+            $("#submit_btn").prop('disabled', false)
+        })
+        $(".datepicker").on('changeDate',dateChangeEvent)
+    });
+
+    function updatePropertyDropdown()
+    {
+        cityEle = $("#city")
+        city = cityEle.val()
+        cityProperties = JSON.parse($("#properties_json").val())
+        if(city == '' || city == undefined)
+        {
+            updateDropdowns('property', [], "Select Property")
+        }
+        else
+        {
+            cityEle.css('border', '1px solid #ccc')
+            updateDropdowns('property', cityProperties[city] || [], "Select Property")
+        }
+    }
+
+    function updateDropdowns(eleId, data, promptText)
+    {
+        var ele = $('#' + eleId);
+        optionsLength = data.length
+        ele.find('option').remove()
+        ele.append($("<option>").attr('value','').text(promptText));
+        val = ''
+        $(data).each(function() {
+            val = this.id
+            ele.append($("<option>").attr('value',this.id).text(this.name))
+        })
+        if(optionsLength == 1)
+        {
+            ele.css('border', '1px solid #ccc')
+            ele.val(val).change()
+        }
+    }
+
+    function submitForm()
+    {
+        $("#submit_btn").prop('disabled', true)
+        cityEle = $("#city")
+        propertyEle = $("#property")
+        checkinEle = $("#checkin")
+        checkoutEle = $("#checkout")
+        city = cityEle.val()
+        property = propertyEle.val()
+        checkin = checkinEle.val()
+        checkout = checkoutEle.val()
+        errorExist = false
+        if(city == '' || city == undefined)
+        {
+            errorExist = true
+            cityEle.css('border', '1px solid red')
+        }
+        else
+        {
+            cityEle.css('border', '1px solid #ccc')
+        }
+        if(property == '' || property == undefined)
+        {
+            errorExist = true
+            propertyEle.css('border', '1px solid red')
+        }
+        else
+        {
+            propertyEle.css('border', '1px solid #ccc')
+        }
+        if(checkin == '' || checkin == undefined)
+        {
+            errorExist = true
+            checkinEle.css('border', '1px solid red')
+        }
+        else
+        {
+            checkin = convertDateFormat(checkin)
+            checkinEle.css('border', '1px solid #ccc')
+        }
+        if(checkout == '' || checkout == undefined)
+        {
+            errorExist = true
+            checkoutEle.css('border', '1px solid red')
+        }
+        else
+        {
+            checkout = convertDateFormat(checkout)
+            checkoutEle.css('border', '1px solid #ccc')
+        }
+        if(errorExist)
+        {
+            $("#submit_btn").prop('disabled', false)
+        }
+        else
+        {
+            submitCompletedForm(property, checkin, checkout)
+        }
+    }
+
+    function submitCompletedForm(property, checkin, checkout)
+    {
+        $.ajax({
+            url: "/submit",
+            method: "get",
+            data: {
+                hotel_id: property,
+                checkin: checkin,
+                checkout: checkout
+            },
+            success: function(data) {
+                console.log(data)
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(errorThrown);
+                console.log(textStatus);
+                alert("Something went wrong")
+            }
+        });
+    }
+
+    function convertDateFormat(userDate)
+    {
+        if(userDate == '')
+            return ''
+        else
+        {
+            var MONTHS = {"Jan" : "01", "Feb" : "02", "Mar" : "03", "Apr" : "04", "May" : "05", "Jun" : "06", "Jul" : "07", "Aug" : "08", "Sep" : "09", "Oct" : "10", "Nov" : "11", "Dec" : "12"}
+            xyz =  userDate.split(",")
+            dateAndMonth = xyz[1].trim().split(" ")
+            date = dateAndMonth[0]
+            month = MONTHS[dateAndMonth[1]]
+            year = xyz[2].trim()
+            userDate = year + "-" + month + "-" + date
+            return userDate
+        }
+    }
+
+    function dateChangeEvent()
+    {
+        startDate = convertDateFormat($("#checkin").val())
+        endDate = convertDateFormat($("#checkout").val())
+        splitStartDate = startDate.split("-")
+        splitEndDate = endDate.split("-")
+        let date1 = new Date(splitStartDate).getTime();
+        let date2 = new Date(splitEndDate).getTime();
+        millisecondsPerDay = 86400000
+        if($(this).attr('id') == 'checkin')
+        {
+            currentDate = new Date().getTime()
+            updatedEndDateEpoch = date1 + millisecondsPerDay * 6
+            if(updatedEndDateEpoch > currentDate)
+            {
+                updatedEndDateEpoch = currentDate
+            }
+            updatedEndDate = new Date(updatedEndDateEpoch).toString()
+            data = updatedEndDate.split(" ")
+            updatedEndDate = data[0] + ", " + data[2] + " " + data[1] + ", " + data[3]
+            updatedStartDate = new Date(date1).toString()
+            data = updatedStartDate.split(" ")
+            updatedStartDate = data[0] + ", " + data[2] + " " + data[1] + ", " + data[3]
+            $("#checkout").off('changeDate');
+            $("#checkout").datepicker("setDate",'')
+            $("#checkout").datepicker("setEndDate",updatedEndDate)
+            $("#checkout").datepicker("setStartDate",updatedStartDate)
+            $("#checkout").on('changeDate', dateChangeEvent);
+            $("#checkout").css('border', '1px solid red');
+        }
+        else
+        {
+            if(date1 > date2)
+            {
+                alert("Start Date cannot be greater than End Date")
+                forceResetDate()
+            }
+            else
+            {
+                $("#checkout").css('border', '1px solid #ccc');
+                dateDiff = date2 - date1
+                if((dateDiff / millisecondsPerDay) > 6)
+                {
+                    alert("The selected date range exceeds one week. Please choose a date range within one week")
+                    forceResetDate()
+                }
+                else
+                {
+                    if(startDate != "" && endDate != "")
+                    {
+                        $("#checkout").css('border', '1px solid #ccc');
+                    }
+                }
+            }
+        }
+    }
+
+    function forceResetDate()
+    {
+        $("#checkout").off('changeDate');
+        $("#checkout").datepicker("setDate",'')
+        $("#checkout").css('border', '1px solid red');
+        $("#checkout").on('changeDate', dateChangeEvent);
+    }
+</script>

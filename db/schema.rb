@@ -10,7 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_18_222222) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_222225) do
+  create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "company"
+    t.string "location"
+    t.string "hlx_hotel_id"
+    t.string "hlx_username"
+    t.string "hlx_consumer_key"
+    t.string "hlx_consumer_secret"
+    t.string "hlx_counter_id"
+    t.string "hlx_counter_name"
+    t.string "hlx_counter_email"
+    t.string "hlx_counter_pwd"
+    t.string "hlx_access_key"
+    t.string "hlx_access_secret"
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "room_name"
+    t.string "room_type"
+    t.bigint "hotel_id", null: false
+    t.integer "occupancy"
+    t.string "hlx_hotel_id"
+    t.string "hlx_room_id"
+    t.string "hlx_room_name"
+    t.string "hlx_room_type"
+    t.integer "hlx_occupancy"
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_split_allowed", default: false
+    t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "username", default: "", null: false
@@ -25,4 +61,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_222222) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "rooms", "hotels"
 end

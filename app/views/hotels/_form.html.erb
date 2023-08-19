@@ -1,0 +1,87 @@
+<%= form_with(model: hotel) do |form| %>
+  <% if hotel.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(hotel.errors.count, "error") %> prohibited this hotel from being saved:</h2>
+
+      <ul>
+        <% hotel.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :company, style: "display: block" %>
+    <%= form.text_field :company %>
+  </div>
+
+  <div>
+    <%= form.label :location, style: "display: block" %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_hotel_id, style: "display: block" %>
+    <%= form.text_field :hlx_hotel_id %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_username, style: "display: block" %>
+    <%= form.text_field :hlx_username %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_consumer_key, style: "display: block" %>
+    <%= form.text_field :hlx_consumer_key %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_consumer_secret, style: "display: block" %>
+    <%= form.text_field :hlx_consumer_secret %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_counter_id, style: "display: block" %>
+    <%= form.text_field :hlx_counter_id %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_counter_name, style: "display: block" %>
+    <%= form.text_field :hlx_counter_name %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_counter_email, style: "display: block" %>
+    <%= form.text_field :hlx_counter_email %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_counter_pwd, style: "display: block" %>
+    <%= form.text_field :hlx_counter_pwd %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_access_key, style: "display: block" %>
+    <%= form.text_field :hlx_access_key %>
+  </div>
+
+  <div>
+    <%= form.label :hlx_access_secret, style: "display: block" %>
+    <%= form.text_field :hlx_access_secret %>
+  </div>
+
+  <div>
+    <%= form.label :is_active, style: "display: block" %>
+    <%= form.check_box :is_active %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

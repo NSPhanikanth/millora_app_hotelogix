@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  company: MyString
+  location: MyString
+  hlx_hotel_id: MyString
+  hlx_username: MyString
+  hlx_consumer_key: MyString
+  hlx_consumer_secret: MyString
+  hlx_counter_id: MyString
+  hlx_counter_name: MyString
+  hlx_counter_email: MyString
+  hlx_counter_pwd: MyString
+  hlx_access_key: MyString
+  hlx_access_secret: MyString
+  is_active: false
+
+two:
+  name: MyString
+  company: MyString
+  location: MyString
+  hlx_hotel_id: MyString
+  hlx_username: MyString
+  hlx_consumer_key: MyString
+  hlx_consumer_secret: MyString
+  hlx_counter_id: MyString
+  hlx_counter_name: MyString
+  hlx_counter_email: MyString
+  hlx_counter_pwd: MyString
+  hlx_access_key: MyString
+  hlx_access_secret: MyString
+  is_active: false

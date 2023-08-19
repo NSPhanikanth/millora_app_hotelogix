@@ -1,0 +1,1 @@
+$('#bookings_table_div').html("<%= escape_javascript(render(:partial => 'booking_details_table', locals: {room_types: @room_types, available_status: @available_status, dates: @dates})) %>");

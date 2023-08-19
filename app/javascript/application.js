@@ -3,8 +3,6 @@
 import "./add_jquery"
 import "./controllers"
 import * as bootstrap from "bootstrap"
-
-import "bootstrap-datepicker"
 import Chart from 'chart.js/auto';
 
 import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
@@ -15,7 +13,7 @@ window.chart = Chart
 
 $(function(){
   console.log("bootstrap-datepicker")
-  $('.datepicker').datepicker();
+  // $('.datepicker').datepicker();
 });
 
 $(function(){
