@@ -38,3 +38,4 @@
 
 # Ignore application configuration
 /config/application.yml
+public/bookings_response/*.json

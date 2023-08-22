@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-    before_action :authenticate_user!
+    # before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
 
     def index
@@ -56,22 +56,8 @@ class HomeController < ApplicationController
         # month = MONTHS[month]
         # checkout = "#{year}-#{month}-#{date}"
 
-
-        hotel = Hotel.find_by(id: hotel_id)
-
-        script_file = Rails.root.join("lib", "scripts", "get_bookings_data.js").to_s
-
-        current_time = Time.now.to_i.to_s
-        if Rails.env.development?
-            output_path = Rails.root.join("public", "bookings_response", current_time + ".json").to_s
-        else
-            output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "bookings_response", current_time + ".json").to_s
-        end
-        cmd = "node #{script_file} #{hotel.hlx_access_key} #{hotel.hlx_access_secret} #{checkin} #{checkout} #{output_path}"
-        puts "Command Executing is: #{cmd}"
-        cmd_resp = `#{cmd}`
-        puts "Command response is: #{cmd_resp}"
-        booking_details = BookingsHelper.parse_response(output_path)
+        bookings_response = BookingsHelper.fetch_response(hotel_id, checkin, checkout)
+        booking_details = bookings_response.present? ? BookingsHelper.parse_response(bookings_response) : []
         # booking_details.each do |booking_detail|
         # end
         puts "booking_details : #{booking_details}"
