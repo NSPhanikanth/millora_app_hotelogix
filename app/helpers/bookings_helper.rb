@@ -1,34 +1,61 @@
 module BookingsHelper
-    def self.parse_response(bookings = [])
+    def self.parse_response(start_date, end_date, bookings = [])
         # x = File.open("/Users/phani/phani_test_this/split_booking_details.json").read
-        guest_stay_details = []
-        bookings.each{|booking|
+
+        room_id_room_mappings = {}
+
+        room_type_details = {}
+        hlx_room_type_mappings = {}
+        hlx_hotel_id_room_type_mappings = {}
+        RoomType.includes(:rooms).all.each do |room_type|
+            room_type_details[room_type.name] =  room_type.attributes.merge({"total_rooms" => room_type.rooms.size})
+            hlx_room_type_mappings[room_type.hlx_room_type_id] = room_type.name
+            room_type.rooms.each do |room_|
+                hlx_hotel_id_room_type_mappings[room_.hlx_room_id] = room_type.name
+            end
+        end
+
+        hotel_status = {}
+        room_type_details.keys.each do |room_type|
+            hotel_status[room_type] = {}
+            (start_date..end_date).each do |date_|
+                room_count = room_type_details[room_type]["total_rooms"]
+                hotel_status[room_type][date_.strftime("%F")] = {"total_rooms" => room_count, "available_rooms" => room_count}
+            end
+        end
+
+        bookings.each do |booking|
             room_stays = {}
-            booking["roomStays"].each{|room_selected|
-                room_stays[room_selected["date"]] = {"roomId" => room_selected["roomId"], "roomTypeId" => room_selected["roomTypeId"]}
-            }
-            booking["guestStays"].each{|guest_details|
-                temp = {}
-                temp["booking_id"] = booking["id"]
-                temp["salutation"] = guest_details["guestDetails"]["salutation"]
-                temp["first_name"] = guest_details["guestDetails"]["fName"]
-                temp["last_name"] = guest_details["guestDetails"]["lName"]
-                temp["email"] = guest_details["guestDetails"]["email"]
-                temp["phone_no"] = guest_details["guestDetails"]["phoneNo"]
-                temp["mobile_no"] = guest_details["guestDetails"]["mobileNo"]
-                temp["gender"] = guest_details["guestDetails"]["gender"]
-                temp["employee_id"] = guest_details["guestDetails"]["customField"]["Employee ID"]
-                ((guest_details["checkInDate"].to_date)..(guest_details["checkOutDate"].to_date - 1.day)).each{|date_|
+            booking["roomStays"].each do |room_selected|
+                room_id = room_selected["roomId"]
+                room_type_id = room_selected["roomTypeId"]
+                room_date = room_selected["date"]
+                room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id]
+                puts "room_type: #{room_type} - room_date: #{room_date} - #{(start_date..end_date).exclude?(room_date)}"
+                next if room_type.nil? or (start_date..end_date).exclude?(room_date.to_date)
+                puts "Before Update : #{hotel_status[room_type][room_date]}"
+                split_allowed = room_type_details[room_type]["is_split_allowed"] rescue false
+                max_occupancy = room_type_details[room_type]["max_occupancy"] rescue 2
+                room_stays[room_date] = {"split_allowed" => split_allowed, "max_occupancy" => max_occupancy, "room_type" => room_type}
+                unless split_allowed
+                    hotel_status[room_type][room_date]["available_rooms"] -= 1
+                end
+                puts "After Update : #{hotel_status[room_type][room_date]}"
+            end
+            booking["guestStays"].each do |guest_details|
+                ((guest_details["checkInDate"].to_date)..(guest_details["checkOutDate"].to_date - 1.day)).each do |date_|
+                    next if (start_date..end_date).exclude?(date_)
                     date_ = date_.strftime("%F")
-                    room_details = {}
-                    room_details["roomId"] = room_stays[date_]["roomId"]
-                    room_details["roomTypeId"] = room_stays[date_]["roomTypeId"]
-                    room_details["date"] = date_
-                    guest_stay_details.append(temp.merge(room_details))
-                }
-            }
-        }
-        return guest_stay_details
+                    room_details = room_stays[date_] rescue nil
+                    next if room_details.nil? or room_details["split_allowed"] == false
+                    max_occupancy = room_details["max_occupancy"].to_i rescue 2
+                    room_type = room_details["room_type"]
+                    hotel_status[room_type][date_]["available_rooms"] -= (1.to_f/max_occupancy)
+                end
+            end
+            puts "hotel_status: #{hotel_status}"
+        end
+        return hotel_status
     end
 
     def self.fetch_response(hotel_id, checkin, checkout, count = 0)

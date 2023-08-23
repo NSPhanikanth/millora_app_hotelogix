@@ -11,13 +11,21 @@
 
         </tr>
         <% room_types.each{|room_type| %>
+            <% room_type_name = room_type["name"] %>
+            <% split_allowed = room_type["is_split_allowed"] %>
+            <% max_occupancy = room_type["max_occupancy"] || 2 %>
             <tr>
                 <td class="bg-light-blue">
-                    <%= room_type %>
+                    <%= room_type_name %>
                 </td>
-                <% room_status = available_status[room_type] || {} %>
+                <% room_status = hotel_status[room_type_name] || {} %>
                 <% dates.each{|date_| %>
-                    <td class="bg-light-blue-1"><%= room_status[date_.strftime("%F")] || 0 %></td>
+                    <% if split_allowed %>
+                        <% available_count = room_status[date_.strftime("%F")]["available_rooms"] * max_occupancy %>
+                    <% else %>
+                        <% available_count = room_status[date_.strftime("%F")]["available_rooms"] %>
+                    <% end %>
+                    <td class="bg-light-blue-1"><%= available_count.round.to_i %></td>
                 <% } %>
             </tr>
         <% } %>
@@ -34,9 +42,10 @@
 
         </tr>
         <% room_types.each{|room_type| %>
+            <% room_type_name = room_type["name"] %>
             <tr>
                 <td class="bg-light-blue">
-                    <%= room_type %>
+                    <%= room_type_name %>
                 </td>
                 <% 7.times do %>
                     <td class="bg-light-blue-1"></td>
