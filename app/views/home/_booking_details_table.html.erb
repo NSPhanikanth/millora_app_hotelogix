@@ -16,7 +16,7 @@
             <% max_occupancy = room_type["max_occupancy"] || 2 %>
             <tr>
                 <td class="bg-light-blue">
-                    <%= room_type_name %>
+                    <%= "#{room_type_name}#{split_allowed ? " (Beds)" : ""}" %>
                 </td>
                 <% room_status = hotel_status[room_type_name] || {} %>
                 <% dates.each{|date_| %>
