@@ -228,7 +228,7 @@
         if($(this).attr('id') == 'checkin')
         {
             currentDate = new Date().getTime()
-            updatedEndDateEpoch = date1 + millisecondsPerDay * 6
+            updatedEndDateEpoch = date1 + millisecondsPerDay * 20
             if(updatedEndDateEpoch > currentDate)
             {
                 updatedEndDateEpoch = currentDate
@@ -257,9 +257,9 @@
             {
                 $("#checkout").css('border', '1px solid #ccc');
                 dateDiff = date2 - date1
-                if((dateDiff / millisecondsPerDay) > 6)
+                if((dateDiff / millisecondsPerDay) > 20)
                 {
-                    alert("The selected date range exceeds one week. Please choose a date range within one week")
+                    alert("The selected date range exceeds three weeks. Please choose a date range within three weeks")
                     forceResetDate()
                 }
                 else

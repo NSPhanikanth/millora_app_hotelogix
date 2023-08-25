@@ -19,10 +19,21 @@ class HomeController < ApplicationController
         start_date = Date.parse(checkin)
         end_date = Date.parse(checkout)
         hotel_id = params["hotel_id"]
-        bookings_response = BookingsHelper.fetch_response(hotel_id, checkin, checkout)
 
-        @hotel_status = bookings_response.nil? ? {} : BookingsHelper.parse_response(start_date, end_date, bookings_response)
-        @dates = start_date..end_date
+        bookings_response = []
+        original_start_date = start_date
+        loop do
+            diff = (end_date - start_date).to_i
+            diff_considered = diff > 6 ? 6 : diff
+            checkin = start_date.strftime("%F")
+            checkout = start_date + diff_considered.days
+            resp = BookingsHelper.fetch_response(hotel_id, checkin, checkout)
+            bookings_response += resp unless resp.nil?
+            start_date += (diff_considered + 1).days
+            break if start_date > end_date
+        end
+        @hotel_status = bookings_response.nil? ? {} : BookingsHelper.parse_response(original_start_date, end_date, bookings_response)
+        @dates = original_start_date..end_date
         @room_types = RoomType.all
         puts "hotel_status : #{@hotel_status}"
 

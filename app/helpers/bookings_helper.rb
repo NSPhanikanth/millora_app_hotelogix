@@ -31,16 +31,16 @@ module BookingsHelper
                 room_type_id = room_selected["roomTypeId"]
                 room_date = room_selected["date"]
                 room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id]
-                puts "room_type: #{room_type} - room_date: #{room_date} - #{(start_date..end_date).exclude?(room_date)}"
+                # puts "room_type: #{room_type} - room_date: #{room_date} - #{(start_date..end_date).exclude?(room_date)}"
                 next if room_type.nil? or (start_date..end_date).exclude?(room_date.to_date)
-                puts "Before Update : #{hotel_status[room_type][room_date]}"
+                # puts "Before Update : #{hotel_status[room_type][room_date]}"
                 split_allowed = room_type_details[room_type]["is_split_allowed"] rescue false
                 max_occupancy = room_type_details[room_type]["max_occupancy"] rescue 2
                 room_stays[room_date] = {"split_allowed" => split_allowed, "max_occupancy" => max_occupancy, "room_type" => room_type}
                 unless split_allowed
                     hotel_status[room_type][room_date]["available_rooms"] -= 1
                 end
-                puts "After Update : #{hotel_status[room_type][room_date]}"
+                # puts "After Update : #{hotel_status[room_type][room_date]}"
             end
             booking["guestStays"].each do |guest_details|
                 ((guest_details["checkInDate"].to_date)..(guest_details["checkOutDate"].to_date - 1.day)).each do |date_|
@@ -53,12 +53,13 @@ module BookingsHelper
                     hotel_status[room_type][date_]["available_rooms"] -= (1.to_f/max_occupancy)
                 end
             end
-            puts "hotel_status: #{hotel_status}"
+            # puts "hotel_status: #{hotel_status}"
         end
         return hotel_status
     end
 
     def self.fetch_response(hotel_id, checkin, checkout, count = 0)
+        # TODO: Handle multiple page response
         hotel = Hotel.find_by(id: hotel_id)
         script_file = Rails.root.join("lib", "scripts", "get_bookings_data.js").to_s
 
