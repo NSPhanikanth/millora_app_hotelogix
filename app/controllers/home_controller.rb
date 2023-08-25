@@ -21,7 +21,7 @@ class HomeController < ApplicationController
         hotel_id = params["hotel_id"]
         bookings_response = BookingsHelper.fetch_response(hotel_id, checkin, checkout)
 
-        @hotel_status = bookings_response.present? ? BookingsHelper.parse_response(start_date, end_date, bookings_response) : {}
+        @hotel_status = bookings_response.nil? ? {} : BookingsHelper.parse_response(start_date, end_date, bookings_response)
         @dates = start_date..end_date
         @room_types = RoomType.all
         puts "hotel_status : #{@hotel_status}"

@@ -20,10 +20,11 @@
                 </td>
                 <% room_status = hotel_status[room_type_name] || {} %>
                 <% dates.each{|date_| %>
+                    <% available_count = (room_status[date_.strftime("%F")]["available_rooms"] || 0) rescue 0 %>
                     <% if split_allowed %>
-                        <% available_count = room_status[date_.strftime("%F")]["available_rooms"] * max_occupancy %>
+                        <% available_count = available_count * max_occupancy %>
                     <% else %>
-                        <% available_count = room_status[date_.strftime("%F")]["available_rooms"] %>
+                        <% available_count = available_count %>
                     <% end %>
                     <td class="bg-light-blue-1"><%= available_count.round.to_i %></td>
                 <% } %>

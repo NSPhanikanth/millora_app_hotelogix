@@ -77,17 +77,17 @@ module BookingsHelper
             json_response = "{}"
         end
         response = JSON.parse(json_response) rescue {}
-        return [] if response.empty?
+        return nil if response.empty?
         status_code = response["hotelogix"]["response"]["status"]["code"] rescue 5000
         if status_code.to_i == 1900
             is_success = BookingsHelper.fetch_api_keys(hotel_id)
             if is_success and count == 0
                 BookingsHelper.fetch_response(hotel_id, checkin, checkout, 1)
             else
-                return []
+                return nil
             end
         elsif status_code.to_i == 5000
-            return []
+            return nil
         else
             bookings = response["hotelogix"]["response"]["bookings"] rescue []
             return bookings
