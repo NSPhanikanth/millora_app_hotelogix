@@ -1,8 +1,8 @@
 <% data_present = dates.present? %>
 <% if data_present %>
-    <table class="table" id="booking_details_table">
+    <table class="table table-bordered border border-white align-middle m-0" id="booking_details_table">
         <tr>
-            <th class="bg-light-blue">
+            <th class="bg-light-blue" style="width: 180px">
                 Date
             </th>
             <% dates.each{|date_| %>
@@ -32,9 +32,9 @@
         <% } %>
     </table>
 <% else %>
-    <table class="table table-bordered align-middle" id="booking_details_table">
+    <table class="table table-bordered border border-white align-middle m-0" id="booking_details_table">
         <tr>
-            <th class="bg-light-blue">
+            <th class="bg-light-blue" style="width: 180px">
                 Date
             </th>
             <% 7.times do %>
