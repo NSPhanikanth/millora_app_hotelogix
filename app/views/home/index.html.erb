@@ -182,6 +182,7 @@
 
     function submitCompletedForm(property, checkin, checkout)
     {
+        $("#loader").show()
         $.ajax({
             url: "/submit",
             method: "get",
@@ -192,11 +193,13 @@
             },
             success: function(data) {
                 console.log(data)
+                $("#loader").hide()
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(errorThrown);
                 console.log(textStatus);
                 alert("Something went wrong")
+                $("#loader").hide()
             }
         });
     }

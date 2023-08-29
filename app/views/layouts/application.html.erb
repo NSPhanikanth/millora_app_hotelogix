@@ -14,6 +14,7 @@
   </head>
 
   <body>
+    <%= image_tag("loader.gif", id: 'loader', style: "position: absolute; top: 48%; left: 48%; z-index: 9999; display: none") %>
     <div class="container-fluid" style="height: 100vh !important">
       <%= yield %>  
     </div>
