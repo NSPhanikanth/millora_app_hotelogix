@@ -68,11 +68,11 @@
     </div>
 </div>
 <%= hidden_field_tag("properties_json", @properties.to_json) %>
-<div class="row d-flex text-center bg-white align-items-center w-100" style="height: 10%; position: absolute; bottom: 0px;">
+<!-- <div class="row d-flex text-center bg-white align-items-center w-100" style="height: 10%; position: absolute; bottom: 0px;">
     <div class="col-12">
-        <%= link_to "Logout", destroy_user_session_path, style: 'color: #000', :method => :delete %>
+        <%#= link_to "Logout", destroy_user_session_path, style: 'color: #000', :method => :delete %>
     </div>
-</div>
+</div> -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('.datepicker').datepicker({
