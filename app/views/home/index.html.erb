@@ -34,7 +34,7 @@
 </div>
 <div class="row text-center p-5 bg-white">
     <div class="card p-4 bg-gray">
-        <div class="card bg-white mb-3">
+        <div class="card bg-white">
             <div class="row justify-content-center p-2">
                 <div class="col-12 py-2">
                     <h5 class="text-blue">Check Availability</h5>
@@ -58,12 +58,8 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-white">
-            <div class="row justify-content-center p-2">
-                <div class="col-12 py-2" id="bookings_table_div">
-                    <%= render 'booking_details_table', room_types: @room_types, available_status: {}, dates: [] %>
-                </div>
-            </div>
+        <div id="bookings_table_div">
+            <%= render 'booking_details_table', room_types: @room_types, hotel_status: {}, dates: [] %>
         </div>
     </div>
 </div>
@@ -107,17 +103,18 @@
         var ele = $('#' + eleId);
         optionsLength = data.length
         ele.find('option').remove()
-        ele.append($("<option>").attr('value','').text(promptText));
+        // ele.append($("<option>").attr('value','').text(promptText));
+        ele.append($("<option>").attr('value','all').text('All'));
         val = ''
         $(data).each(function() {
             val = this.id
             ele.append($("<option>").attr('value',this.id).text(this.name))
         })
-        if(optionsLength == 1)
-        {
-            ele.css('border', '1px solid #ccc')
-            ele.val(val).change()
-        }
+        // if(optionsLength == 1)
+        // {
+        //     ele.css('border', '1px solid #ccc')
+        //     ele.val(val).change()
+        // }
     }
 
     function submitForm()
@@ -176,17 +173,18 @@
         }
         else
         {
-            submitCompletedForm(property, checkin, checkout)
+            submitCompletedForm(city, property, checkin, checkout)
         }
     }
 
-    function submitCompletedForm(property, checkin, checkout)
+    function submitCompletedForm(city, property, checkin, checkout)
     {
         $("#loader").show()
         $.ajax({
             url: "/submit",
             method: "get",
             data: {
+                location: city,
                 hotel_id: property,
                 checkin: checkin,
                 checkout: checkout

@@ -1,6 +1,10 @@
 <% data_present = dates.present? %>
+<div class="card bg-white mt-3">
+<div class="row justify-content-center p-2">
+<div class="col-12 py-2">
 <% if data_present %>
-    <table class="table table-bordered border border-white align-middle m-0" id="booking_details_table">
+    <table class="table table-bordered border border-white align-middle m-0 caption-top" id="booking_details_table">
+        <caption class="text-blue pt-0 text-center"><%= hotel_name %></caption>
         <tr>
             <th class="bg-light-blue" style="width: 180px">
                 Date
@@ -57,3 +61,6 @@
     </table>
 
 <% end %>
+</div>
+</div>
+</div>
