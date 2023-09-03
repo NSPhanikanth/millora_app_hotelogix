@@ -232,10 +232,10 @@
         {
             currentDate = new Date().getTime()
             updatedEndDateEpoch = date1 + millisecondsPerDay * 20
-            if(updatedEndDateEpoch > currentDate)
-            {
-                updatedEndDateEpoch = currentDate
-            }
+            // if(updatedEndDateEpoch > currentDate)
+            // {
+            //     updatedEndDateEpoch = currentDate
+            // }
             updatedEndDate = new Date(updatedEndDateEpoch).toString()
             data = updatedEndDate.split(" ")
             updatedEndDate = data[0] + ", " + data[2] + " " + data[1] + ", " + data[3]
