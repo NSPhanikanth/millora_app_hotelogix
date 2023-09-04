@@ -1,5 +1,5 @@
 module BookingsHelper
-    def self.parse_response(start_date, end_date, bookings = [])
+    def self.parse_response(hotel_id, start_date, end_date, bookings = [])
         # x = File.open("/Users/phani/phani_test_this/split_booking_details.json").read
 
         room_id_room_mappings = {}
@@ -8,9 +8,10 @@ module BookingsHelper
         hlx_room_type_mappings = {}
         hlx_hotel_id_room_type_mappings = {}
         RoomType.includes(:rooms).all.each do |room_type|
-            room_type_details[room_type.name] =  room_type.attributes.merge({"total_rooms" => room_type.rooms.size})
+            rooms = room_type.rooms.select{|x| x.hotel_id == hotel_id}
+            room_type_details[room_type.name] =  room_type.attributes.merge({"total_rooms" => rooms.size})
             hlx_room_type_mappings[room_type.hlx_room_type_id] = room_type.name
-            room_type.rooms.each do |room_|
+            rooms.each do |room_|
                 hlx_hotel_id_room_type_mappings[room_.hlx_room_id] = room_type.name
             end
         end

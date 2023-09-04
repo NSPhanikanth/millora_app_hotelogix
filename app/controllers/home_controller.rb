@@ -40,7 +40,7 @@ class HomeController < ApplicationController
                 start_date += (diff_considered + 1).days
                 break if start_date > end_date
             end
-            @all_hotel_status[hotel.name] = bookings_response.nil? ? {} : BookingsHelper.parse_response(original_start_date, end_date, bookings_response)
+            @all_hotel_status[hotel.name] = bookings_response.nil? ? {} : BookingsHelper.parse_response(hotel.id, original_start_date, end_date, bookings_response)
         end
         @dates = original_start_date..end_date
         @room_types = RoomType.all
