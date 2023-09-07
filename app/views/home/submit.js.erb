@@ -1,7 +1,11 @@
 allHotelStatus = JSON.parse('<%= raw @all_hotel_status.to_json %>')
 $('#bookings_table_div').html("");
+<% if @hotel_id == 'all' %>
+$('#bookings_table_div').append("<%= escape_javascript(render(:partial => 'booking_details_table', locals: {room_types: @room_types, hotel_status: @combined_data || {}, dates: @dates, hotel_name: "Combined"})) %>");
+<% else %>
 <% @all_hotel_status.each do |hotel_name, hotel_status| %>
     $('#bookings_table_div').append("<%= escape_javascript(render(:partial => 'booking_details_table', locals: {room_types: @room_types, hotel_status: hotel_status || {}, dates: @dates, hotel_name: hotel_name})) %>");
+<% end %>
 <% end %>
 $("#submit_btn").prop('disabled', false)
 $("#loader").hide()

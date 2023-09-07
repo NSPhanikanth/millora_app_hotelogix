@@ -18,14 +18,14 @@ class HomeController < ApplicationController
         checkout = params["checkout"].strip
         start_date = Date.parse(checkin)
         end_date = Date.parse(checkout)
-        hotel_id = params["hotel_id"]
+        @hotel_id = params["hotel_id"]
         location = params["location"]
 
         original_start_date = start_date
-        if hotel_id == 'all'
+        if @hotel_id == 'all'
             hotels = Hotel.where(location: location)
         else
-            hotels = Hotel.where(id: hotel_id)
+            hotels = Hotel.where(id: @hotel_id)
         end
         @all_hotel_status = {}
         hotels.each do |hotel|
@@ -42,6 +42,7 @@ class HomeController < ApplicationController
             end
             @all_hotel_status[hotel.name] = bookings_response.nil? ? {} : BookingsHelper.parse_response(hotel.id, original_start_date, end_date, bookings_response)
         end
+        @combined_data = BookingsHelper.combine_data(@all_hotel_status) if @hotel_id == 'all'
         @dates = original_start_date..end_date
         @room_types = RoomType.all
         puts "hotel_status : #{@all_hotel_status}"

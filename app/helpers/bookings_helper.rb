@@ -130,4 +130,19 @@ module BookingsHelper
             return false
         end
     end
+
+    def self.combine_data(all_hotel_status)
+        combined_data = {}
+        all_hotel_status.each do |hotel_name, hotel_status|
+            hotel_status.each do |room_type, details|
+                combined_data[room_type] = {} if combined_data[room_type].nil?
+                details.each do |date_, data|
+                    combined_data[room_type][date_] = {"total_rooms" => 0, "available_rooms" => 0} if combined_data[room_type][date_].nil?
+                    combined_data[room_type][date_]["total_rooms"] += data["total_rooms"]
+                    combined_data[room_type][date_]["available_rooms"] += data["available_rooms"]
+                end
+            end
+        end
+        return combined_data
+    end
 end
