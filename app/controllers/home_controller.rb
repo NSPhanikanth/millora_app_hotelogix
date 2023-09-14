@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
     def index
         client_id = params["client_id"]
-        render file: 'public/404.html', status: :not_found, layout: false if client_id != 'D1pOQgmP50Ql99J5'
+        render file: Rails.public_path.join('404.html'), status: :not_found, layout: false if client_id != 'D1pOQgmP50Ql99J5'
         @properties = {}
         Hotel.all.each{|hotel_details|
             location = hotel_details["location"]
