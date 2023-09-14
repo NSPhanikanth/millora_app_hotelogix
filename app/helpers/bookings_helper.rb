@@ -97,7 +97,7 @@ module BookingsHelper
 
     end
 
-    def self.fetch_api_keys(hotel_id)
+    def self.fetch_api_keys(hotel_id, wsauth_required = false)
         hotel = Hotel.find_by(id: hotel_id)
         script_file = Rails.root.join("lib", "scripts", "wsauth_login.js").to_s
         current_time = Time.now.to_i.to_s
@@ -106,7 +106,7 @@ module BookingsHelper
         else
             output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "bookings_response", current_time + ".json").to_s
         end
-        cmd = "node #{script_file} false '#{hotel.hlx_consumer_key}' '#{hotel.hlx_consumer_secret}' '#{hotel.hlx_hotel_id}' '#{hotel.hlx_counter_id}' '#{hotel.hlx_counter_email}' '#{output_path}'"
+        cmd = "node #{script_file} #{wsauth_required} '#{hotel.hlx_consumer_key}' '#{hotel.hlx_consumer_secret}' '#{hotel.hlx_hotel_id}' '#{hotel.hlx_counter_id}' '#{hotel.hlx_counter_email}' '#{hotel.hlx_counter_pwd}' '#{output_path}'"
         puts "Command Executing is: #{cmd}"
         cmd_resp = `#{cmd}`
         begin
