@@ -1,43 +1,30 @@
-# Puma can serve each request in a thread from an internal thread pool.
-# The `threads` method setting takes two numbers: a minimum and maximum.
-# Any libraries that use thread pools should be configured to match
-# the maximum value specified for Puma. Default is set to 5 threads for minimum
-# and maximum; this matches the default thread size of Active Record.
-#
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
-threads min_threads_count, max_threads_count
+#!/usr/bin/env puma
 
-# Specifies the `worker_timeout` threshold that Puma will use to wait before
-# terminating a worker in development environments.
-#
-worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
+directory '/home/millora/millora_app_hotelogix'
+rackup "/home/millora/millora_app_hotelogix/config.ru"
+environment 'development'
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-port ENV.fetch("PORT") { 3000 }
+tag ''
 
-# Specifies the `environment` that Puma will run in.
-#
-environment ENV.fetch("RAILS_ENV") { "development" }
+pidfile "/home/millora/millora_app_hotelogix/tmp/pids/puma.pid"
+state_path "/home/millora/millora_app_hotelogix/tmp/pids/puma.state"
+stdout_redirect '/home/millora/millora_app_hotelogix/log/puma.error.log', '/home/millora/millora_app_hotelogix/log/puma.access.log', true
 
-# Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+threads 0,8
 
-# Specifies the number of `workers` to boot in clustered mode.
-# Workers are forked web server processes. If using threads and workers together
-# the concurrency of the application would be max `threads` * `workers`.
-# Workers do not work on JRuby or Windows (both of which do not support
-# processes).
-#
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+# bind 'unix:///home/millora/millora_app_hotelogix/tmp/sockets/miclient-millora-puma.sock'
 
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory.
-#
-# preload_app!
+port 3000
 
-# Allow puma to be restarted by `bin/rails restart` command.
-plugin :tmp_restart
+workers 0
+
+preload_app!
+
+worker_timeout 60
+
+prune_bundler
+
+on_restart do
+  puts 'Refreshing Gemfile'
+  ENV["BUNDLE_GEMFILE"] = ""
+end
