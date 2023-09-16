@@ -30,8 +30,10 @@ module BookingsHelper
             booking["roomStays"].each do |room_selected|
                 room_id = room_selected["roomId"]
                 room_type_id = room_selected["roomTypeId"]
+                room_type_name = room_selected["roomTypeName"]
                 room_date = room_selected["date"]
-                room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id]
+                mappings = {"Queen" => "Single", "Queen Size" => "Single", "Executive Room" => "Single", "Deluxe Room" => "Single", "Twin Room" => "Twin", "Queen Bed" => "Single", "Twin Bed" => "Twin", "Standard Queen"=> "Single", "Standard Queen."=> "Single", "Superior Queen"=> "Single"}
+                room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id] || mappings[room_type_name]
                 # puts "room_type: #{room_type} - room_date: #{room_date} - #{(start_date..end_date).exclude?(room_date)}"
                 next if room_type.nil? or (start_date..end_date).exclude?(room_date.to_date)
                 # puts "Before Update : #{hotel_status[room_type][room_date]}"
