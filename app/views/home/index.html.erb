@@ -29,7 +29,7 @@
         <h4 class="mb-0">Millora Corporate Managed Residence</h4>
     </div>
     <div class="col-2 bg-white p-2 d-flex justify-content-center align-items-center">
-        <%= image_tag("caratlane.png", class: "img-responsive h-75") %>
+        <%= image_tag(@client.logo, class: "img-responsive h-75") %>
     </div>
 </div>
 <div class="row text-center p-5 bg-white">
@@ -187,7 +187,8 @@
                 location: city,
                 hotel_id: property,
                 checkin: checkin,
-                checkout: checkout
+                checkout: checkout,
+                access_key: '<%= @access_key %>'
             },
             success: function(data) {
                 console.log(data)

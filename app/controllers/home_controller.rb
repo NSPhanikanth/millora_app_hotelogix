@@ -2,17 +2,19 @@ class HomeController < ApplicationController
 
     # before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
+    before_action :set_client
 
     def index
-        client_id = params["client_id"]
-        render file: Rails.public_path.join('404.html'), status: :not_found, layout: false if client_id != 'D1pOQgmP50Ql99J5'
+        puts "client: #{@client}"
+        if @client.nil?
+            render file: Rails.public_path.join('404.html'), status: :not_found, layout: false and return
+        end
         @properties = {}
-        Hotel.all.each{|hotel_details|
+        @client.hotels.each{|hotel_details|
             location = hotel_details["location"]
             @properties[location] = [] if @properties[location].nil?
             @properties[location].append({'name' => hotel_details["name"], 'id' => hotel_details["id"]})
         }
-        @room_types = RoomType.all
     end
 
     def submit
@@ -25,9 +27,9 @@ class HomeController < ApplicationController
 
         original_start_date = start_date
         if @hotel_id == 'all'
-            hotels = Hotel.where(location: location)
+            hotels = @client.hotels.select{|hotel| hotel if hotel.location == location }
         else
-            hotels = Hotel.where(id: @hotel_id)
+            hotels = @client.hotels.select{|hotel| hotel if hotel.id == @hotel_id }
         end
         @all_hotel_status = {}
         hotels.each do |hotel|
@@ -46,12 +48,22 @@ class HomeController < ApplicationController
         end
         @combined_data = BookingsHelper.combine_data(@all_hotel_status) if @hotel_id == 'all'
         @dates = original_start_date..end_date
-        @room_types = RoomType.all
         puts "hotel_status : #{@all_hotel_status}"
 
         respond_to do |format|
             format.js
         end
         # render json: {status: 'success', message: 'Success', resp: resp}
+    end
+
+    private
+    def set_client
+        @access_key = params["access_key"]
+        @client = Client.includes(:hotels).find_by(access_key: @access_key)
+        set_room_types
+    end
+
+    def set_room_types
+        @room_types = RoomType.includes(:rooms).where(hotel_id: @client.hotels.pluck(:id)).uniq
     end
 end

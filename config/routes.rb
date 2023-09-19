@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: 'registrations', controllers: {
     sessions: 'users/sessions'
   }
-  get 'cid/:client_id', to: 'home#index'
+  get 'cid/:access_key', to: 'home#index'
   get '/submit', to: 'home#submit'
   root to: "home#index"
   match '*unmatched', to: 'application#route_not_found', via: :all

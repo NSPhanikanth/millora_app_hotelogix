@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_18_222225) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_180000) do
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "display_name"
+    t.string "logo"
+    t.string "logo_2x"
+    t.string "access_key", null: false
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "company"
@@ -28,6 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_222225) do
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_hotels_on_client_id"
   end
 
   create_table "room_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -39,6 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_222225) do
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "hotel_id"
+    t.index ["hotel_id"], name: "index_room_types_on_hotel_id"
   end
 
   create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -69,6 +84,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_222225) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "hotels", "clients"
+  add_foreign_key "room_types", "hotels"
   add_foreign_key "rooms", "hotels"
   add_foreign_key "rooms", "room_types"
 end

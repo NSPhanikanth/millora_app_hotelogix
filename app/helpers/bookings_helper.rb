@@ -6,11 +6,13 @@ module BookingsHelper
 
         room_type_details = {}
         hlx_room_type_mappings = {}
+        hlx_room_type_name_mappings = {}
         hlx_hotel_id_room_type_mappings = {}
-        RoomType.includes(:rooms).all.each do |room_type|
+        RoomType.where(hotel_id: hotel_id).includes(:rooms).all.each do |room_type|
             rooms = room_type.rooms.select{|x| x.hotel_id == hotel_id}
             room_type_details[room_type.name] =  room_type.attributes.merge({"total_rooms" => rooms.size})
             hlx_room_type_mappings[room_type.hlx_room_type_id] = room_type.name
+            hlx_room_type_name_mappings[room_type.hlx_room_type_name] = room_type.name
             rooms.each do |room_|
                 hlx_hotel_id_room_type_mappings[room_.hlx_room_id] = room_type.name
             end
@@ -33,7 +35,7 @@ module BookingsHelper
                 room_type_name = room_selected["roomTypeName"]
                 room_date = room_selected["date"]
                 mappings = {"Queen" => "Single", "Queen Size" => "Single", "Executive Room" => "Single", "Deluxe Room" => "Single", "Twin Room" => "Twin", "Queen Bed" => "Single", "Twin Bed" => "Twin", "Standard Queen"=> "Single", "Standard Queen."=> "Single", "Superior Queen"=> "Single"}
-                room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id] || mappings[room_type_name]
+                room_type = hlx_hotel_id_room_type_mappings[room_id] || hlx_room_type_mappings[room_type_id] || hlx_room_type_name_mappings[room_type_name] || mappings[room_type_name]
                 # puts "room_type: #{room_type} - room_date: #{room_date} - #{(start_date..end_date).exclude?(room_date)}"
                 next if room_type.nil? or (start_date..end_date).exclude?(room_date.to_date)
                 # puts "Before Update : #{hotel_status[room_type][room_date]}"
