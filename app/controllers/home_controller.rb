@@ -7,7 +7,7 @@ class HomeController < ApplicationController
         client_id = params["client_id"]
         render file: Rails.public_path.join('404.html'), status: :not_found, layout: false if client_id != 'D1pOQgmP50Ql99J5'
         @properties = {}
-        Hotel.all.each{|hotel_details|
+        Hotel.all.order('name asc').each{|hotel_details|
             location = hotel_details["location"]
             @properties[location] = [] if @properties[location].nil?
             @properties[location].append({'name' => hotel_details["name"], 'id' => hotel_details["id"]})
