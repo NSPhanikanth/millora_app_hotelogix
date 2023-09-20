@@ -10,7 +10,7 @@ class HomeController < ApplicationController
             render file: Rails.public_path.join('404.html'), status: :not_found, layout: false and return
         end
         @properties = {}
-        @client.hotels.each{|hotel_details|
+        @client.hotels.order('name asc').each{|hotel_details|
             location = hotel_details["location"]
             @properties[location] = [] if @properties[location].nil?
             @properties[location].append({'name' => hotel_details["name"], 'id' => hotel_details["id"]})
@@ -60,7 +60,7 @@ class HomeController < ApplicationController
     def set_client
         @access_key = params["access_key"]
         @client = Client.includes(:hotels).find_by(access_key: @access_key)
-        set_room_types
+        set_room_types if @client.present?
     end
 
     def set_room_types
