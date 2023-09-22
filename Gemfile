@@ -54,6 +54,7 @@ gem "bootsnap", require: false
 
 # Devise for user authentication
 gem "devise"
+gem "bcrypt"
 
 gem 'whenever', require: false
 
@@ -74,10 +75,12 @@ group :development do
   gem 'ed25519'
   gem 'bcrypt_pbkdf'
   gem 'capistrano',         require: false
-  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rbenv',     require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'daemons'
+  gem 'sshkit-sudo'
   gem "pry"
 end
 
@@ -89,15 +92,15 @@ group :test do
 end
 
 # A PDF generation plugin for Ruby on Rails [https://github.com/mileszs/wicked_pdf]
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+# gem 'wicked_pdf'
+# gem 'wkhtmltopdf-binary'
 
 # Converts numbers to strings [https://github.com/radar/humanize]
 gem 'humanize'
 
-gem 'carrierwave', '>= 3.0.0.beta', '< 4.0'
-gem 'fog-aws'
-gem 'combine_pdf'
+# gem 'carrierwave', '>= 3.0.0.beta', '< 4.0'
+# gem 'fog-aws'
+# gem 'combine_pdf'
 gem 'audited'
 gem 'figaro'
 
