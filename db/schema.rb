@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_19_180000) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_091201) do
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "display_name"
@@ -66,6 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_19_180000) do
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hlx_room_type_id"
+    t.string "hlx_room_type_name"
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
     t.index ["room_type_id"], name: "index_rooms_on_room_type_id"
   end

@@ -11,10 +11,12 @@ module BookingsHelper
         RoomType.where(hotel_id: hotel_id).includes(:rooms).all.each do |room_type|
             rooms = room_type.rooms.select{|x| x.hotel_id == hotel_id}
             room_type_details[room_type.name] =  room_type.attributes.merge({"total_rooms" => rooms.size})
-            hlx_room_type_mappings[room_type.hlx_room_type_id] = room_type.name
-            hlx_room_type_name_mappings[room_type.hlx_room_type_name] = room_type.name
+            # hlx_room_type_mappings[room_type.hlx_room_type_id] = room_type.name
+            # hlx_room_type_name_mappings[room_type.hlx_room_type_name] = room_type.name
             rooms.each do |room_|
                 hlx_hotel_id_room_type_mappings[room_.hlx_room_id] = room_type.name
+                hlx_room_type_mappings[room_.hlx_room_type_id] = room_type.name
+                hlx_room_type_name_mappings[room_.hlx_room_type_name] = room_type.name
             end
         end
 
