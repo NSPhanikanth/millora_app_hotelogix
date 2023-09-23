@@ -52,8 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_091201) do
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "hotel_id"
-    t.index ["hotel_id"], name: "index_room_types_on_hotel_id"
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_room_types_on_client_id"
   end
 
   create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_091201) do
   end
 
   add_foreign_key "hotels", "clients"
-  add_foreign_key "room_types", "hotels"
+  add_foreign_key "room_types", "clients"
   add_foreign_key "rooms", "hotels"
   add_foreign_key "rooms", "room_types"
 end

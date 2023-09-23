@@ -5,10 +5,10 @@ class HomeController < ApplicationController
     before_action :set_client
 
     def index
-        puts "client: #{@client}"
         if @client.nil?
             render file: Rails.public_path.join('404.html'), status: :not_found, layout: false and return
         end
+        @room_types = @client.room_types
         @properties = {}
         @client.hotels.order('name asc').each{|hotel_details|
             location = hotel_details["location"]
@@ -29,8 +29,9 @@ class HomeController < ApplicationController
         if @hotel_id == 'all'
             hotels = @client.hotels.select{|hotel| hotel if hotel.location == location }
         else
-            hotels = @client.hotels.select{|hotel| hotel if hotel.id == @hotel_id }
+            hotels = @client.hotels.select{|hotel| hotel if hotel.id == @hotel_id.to_i }
         end
+        @room_types = @client.room_types
         @all_hotel_status = {}
         hotels.each do |hotel|
             bookings_response = []
@@ -48,7 +49,6 @@ class HomeController < ApplicationController
         end
         @combined_data = BookingsHelper.combine_data(@all_hotel_status) if @hotel_id == 'all'
         @dates = original_start_date..end_date
-        puts "hotel_status : #{@all_hotel_status}"
 
         respond_to do |format|
             format.js
@@ -60,10 +60,7 @@ class HomeController < ApplicationController
     def set_client
         @access_key = params["access_key"]
         @client = Client.includes(:hotels).find_by(access_key: @access_key)
-        set_room_types if @client.present?
+        Rails.logger.info "client identified: #{@client}"
     end
 
-    def set_room_types
-        @room_types = RoomType.includes(:rooms).where(hotel_id: @client.hotels.pluck(:id)).uniq
-    end
 end
