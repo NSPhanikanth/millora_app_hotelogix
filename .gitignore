@@ -39,3 +39,5 @@
 # Ignore application configuration
 /config/application.yml
 public/bookings_response/*.json
+public/house_status_response/*.json
+public/reports/*.xlsx

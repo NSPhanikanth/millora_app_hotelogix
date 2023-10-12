@@ -58,6 +58,10 @@ set :puma_access_log, "#{release_path}/log/puma.access.log"
 set :puma_error_log,  "#{release_path}/log/puma.error.log"
 
 
+set :whenever_roles, [:app]
+set :whenever_identifier, "#{fetch(:branch)}_#{fetch(:rails_env)}"
+
+
 
 # Custom SSH Options
 # ==================

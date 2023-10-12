@@ -104,6 +104,44 @@ module BookingsHelper
 
     end
 
+    def self.fetch_hotel_status(hotel_id, start_date, end_date, count = 0)
+        # TODO: Handle multiple page response
+        hotel = Hotel.find_by(id: hotel_id)
+        script_file = Rails.root.join("lib", "scripts", "get_house_status.js").to_s
+
+        current_time = Time.now.to_i.to_s
+        if Rails.env.development?
+            output_path = Rails.root.join("public", "house_status_response", current_time + ".json").to_s
+        else
+            output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "house_status_response", current_time + ".json").to_s
+        end
+        cmd = "node #{script_file} '#{hotel.hlx_access_key}' '#{hotel.hlx_access_secret}' '#{start_date}' '#{end_date}' '#{output_path}'"
+        puts "Command Executing is: #{cmd}"
+        cmd_resp = `#{cmd}`
+        begin
+            json_response = File.open(output_path).read
+        rescue => e
+            json_response = "{}"
+        end
+        response = JSON.parse(json_response) rescue {}
+        return nil if response.empty?
+        status_code = response["hotelogix"]["response"]["status"]["code"] rescue 5000
+        if status_code.to_i == 1900
+            is_success = BookingsHelper.fetch_api_keys(hotel_id)
+            if is_success and count == 0
+                BookingsHelper.fetch_hotel_status(hotel_id, start_date, end_date, 1)
+            else
+                return nil
+            end
+        elsif status_code.to_i == 5000
+            return nil
+        else
+            resp = response["hotelogix"]["response"]["days"] rescue []
+            return resp
+        end
+
+    end
+
     def self.fetch_api_keys(hotel_id, wsauth_required = false)
         hotel = Hotel.find_by(id: hotel_id)
         script_file = Rails.root.join("lib", "scripts", "wsauth_login.js").to_s
