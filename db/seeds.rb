@@ -59,6 +59,6 @@ hotels_data.each do |hotel_data|
     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
     hotels << hotel
 end
-mappings = {"Executive Room" => "Double", "Deluxe Room" => "Double", "Queen Size" => "Double", "Twin Room" => "Twin", "Double" => "Double", "Twin" => "Twin", "Standard Queen" => "Double", "Standard Queen." => "Double"}
+mappings = {"Executive Room" => "Double", "Deluxe Room" => "Double", "Queen Size" => "Double", "Twin Room" => "Twin", "Double" => "Double", "Twin" => "Twin", "Standard Queen" => "Double", "Standard Queen." => "Double", "Superior Queen" => "Double"}
 store_room_info(hotels, mappings, true)
 

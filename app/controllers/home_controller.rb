@@ -39,7 +39,7 @@ class HomeController < ApplicationController
                 diff = (end_date - start_date).to_i
                 diff_considered = diff > 6 ? 6 : diff
                 checkin = start_date.strftime("%F")
-                checkout = start_date + diff_considered.days
+                checkout = (start_date + diff_considered.days).strftime("%F")
                 resp = BookingsHelper.fetch_response(hotel.id, checkin, checkout)
                 bookings_response += resp unless resp.nil?
                 start_date += (diff_considered + 1).days
