@@ -87,15 +87,15 @@ module BookingsHelper
         end
         response = JSON.parse(json_response) rescue {}
         return nil if response.empty?
-        status_code = response["hotelogix"]["response"]["status"]["code"] rescue 5000
-        if status_code.to_i == 1900
-            is_success = BookingsHelper.fetch_api_keys(hotel_id)
+        status_code = response["hotelogix"]["response"]["status"]["code"].to_i rescue 5000
+        if [1900, 4003].include?(status_code)
+            is_success = BookingsHelper.fetch_api_keys(hotel_id, status_code == 1900)
             if is_success and count == 0
                 BookingsHelper.fetch_response(hotel_id, checkin, checkout, 1)
             else
                 return nil
             end
-        elsif status_code.to_i == 5000
+        elsif status_code == 5000
             return nil
         else
             bookings = response["hotelogix"]["response"]["bookings"] rescue []
@@ -125,15 +125,15 @@ module BookingsHelper
         end
         response = JSON.parse(json_response) rescue {}
         return nil if response.empty?
-        status_code = response["hotelogix"]["response"]["status"]["code"] rescue 5000
-        if status_code.to_i == 1900
-            is_success = BookingsHelper.fetch_api_keys(hotel_id)
+        status_code = response["hotelogix"]["response"]["status"]["code"].to_i rescue 5000
+        if [1900, 4003].include?(status_code)
+            is_success = BookingsHelper.fetch_api_keys(hotel_id, status_code == 1900)
             if is_success and count == 0
                 BookingsHelper.fetch_hotel_status(hotel_id, start_date, end_date, 1)
             else
                 return nil
             end
-        elsif status_code.to_i == 5000
+        elsif status_code == 5000
             return nil
         else
             resp = response["hotelogix"]["response"]["days"] rescue []
