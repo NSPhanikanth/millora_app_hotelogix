@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :day, at: '05:00am', roles: [:app] do
+every :day, at: '01:00am', roles: [:app] do
 	rake "send_daily_report"
 end
