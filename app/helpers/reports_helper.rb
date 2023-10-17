@@ -57,9 +57,11 @@ module ReportsHelper
             date_ = resp["date"]
             formatted_date = DateTime.parse(date_).to_date
             room_types = resp["roomTypes"] || []
+            total_bookings_on_date = 0
             room_types.each do |room_type|
                 rooms_count = (room_type["totalRooms"].to_i || 0) rescue 0
                 bookings_count = (room_type["totalBookins"].to_i || 0) rescue 0
+                total_bookings_on_date += bookings_count
                 total_rooms += rooms_count
                 occupied_rooms_on_date += bookings_count if todays_date == formatted_date
                 occupied_rooms_till_date += bookings_count if todays_date <= formatted_date
@@ -68,7 +70,7 @@ module ReportsHelper
                 total_room_count_till_date += rooms_count if todays_date <= formatted_date
                 total_room_count += rooms_count
             end
-            occupied_rooms[date_] = occupied_rooms_on_date
+            occupied_rooms[date_] = total_bookings_on_date
         end
         occ_day = total_rooms_on_date == 0 ? 0 : (100 * occupied_rooms_on_date.to_f / total_rooms_on_date).round(2)
         occ_eom = total_room_count == 0 ? 0 : (100 * occupied_rooms_till_end.to_f / total_room_count).round(2)
