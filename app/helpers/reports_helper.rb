@@ -24,7 +24,7 @@ module ReportsHelper
                     start_date += (diff_considered + 1).days
                     break if start_date > end_date
                 end
-                final_response = ReportsHelper.parse_response(hotel, original_start_date, end_date, hotel_status)
+                final_response = ReportsHelper.parse_response(hotel, original_start_date, end_date, report_date, hotel_status)
                 location_data[hotel.location] << {"hotel_name" => hotel.name}.merge(final_response)
                 properties_count += 1
             end
@@ -36,7 +36,7 @@ module ReportsHelper
         return clients_data
     end
 
-    def self.parse_response(hotel, start_date, end_date, response)
+    def self.parse_response(hotel, start_date, end_date, report_date, response)
         occupied_rooms = {}
         occ_day = 0
         occ_mtd = 0
@@ -48,7 +48,7 @@ module ReportsHelper
         total_room_count = 0
         total_room_count_till_date = 0
         total_rooms_on_date = 0
-        todays_date = Time.now.in_time_zone("Chennai").to_date
+        todays_date = report_date
         (start_date..end_date).each do |selected_date|
             occupied_rooms[selected_date.strftime("%F")] = 0
         end
