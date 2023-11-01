@@ -58,6 +58,7 @@ module ReportsHelper
             formatted_date = DateTime.parse(date_).to_date
             room_types = resp["roomTypes"] || []
             total_bookings_on_date = 0
+            total_rooms_on_date = 0
             room_types.each do |room_type|
                 rooms_count = (room_type["totalRooms"].to_i || 0) rescue 0
                 bookings_count = (room_type["totalBookins"].to_i || 0) rescue 0
