@@ -149,7 +149,7 @@ module BookingsHelper
         if Rails.env.development?
             output_path = Rails.root.join("public", "api_keys", current_time + "_#{hotel_id}.json").to_s
         else
-            output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "bookings_response", current_time + "_#{hotel_id}.json").to_s
+            output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "api_keys", current_time + "_#{hotel_id}.json").to_s
         end
         cmd = "node #{script_file} #{wsauth_required} '#{hotel.hlx_consumer_key}' '#{hotel.hlx_consumer_secret}' '#{hotel.hlx_hotel_id}' '#{hotel.hlx_counter_id}' '#{hotel.hlx_counter_email}' '#{hotel.hlx_counter_pwd}' '#{output_path}'"
         puts "Command Executing is: #{cmd}"
