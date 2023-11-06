@@ -147,7 +147,7 @@ module BookingsHelper
         script_file = Rails.root.join("lib", "scripts", "wsauth_login.js").to_s
         current_time = Time.now.to_i.to_s
         if Rails.env.development?
-            output_path = Rails.root.join("public", "bookings_response", current_time + "_#{hotel_id}.json").to_s
+            output_path = Rails.root.join("public", "api_keys", current_time + "_#{hotel_id}.json").to_s
         else
             output_path = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "bookings_response", current_time + "_#{hotel_id}.json").to_s
         end
