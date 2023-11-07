@@ -2,7 +2,7 @@ class HomeController < ApplicationController
 
     # before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
-    before_action :set_client
+    before_action :set_client, except: [:download_report]
 
     def index
         if @client.nil?
@@ -56,6 +56,22 @@ class HomeController < ApplicationController
         # render json: {status: 'success', message: 'Success', resp: resp}
     end
 
+    def download_report
+        begin
+            report_date = Time.parse(params["date"]).to_date rescue (Time.now.to_date - 1.day)
+            data = ReportsHelper.daily_report(report_date)
+            if Rails.env.development?
+                filepath = Rails.root.join("public", "reports", "daily_report_#{report_date.strftime("%F").gsub("-", "")}.xlsx").to_s
+            else
+                filepath = File.join(Rails.root.to_s.split("releases")[0], "shared", "public", "reports", "daily_report_#{report_date.strftime("%F").gsub("-", "")}.xlsx").to_s
+            end
+
+            ReportsHelper.create_report(data, filepath, report_date)
+            send_file(filepath, filename: filepath.split("/")[-1], type: "application/xlsx")
+        rescue
+            render plain: "Something Went Wrong"
+        end
+    end
     private
     def set_client
         @access_key = params["access_key"]
