@@ -62,3 +62,148 @@ end
 mappings = {"Executive Room" => "Double", "Deluxe Room" => "Double", "Queen Size" => "Double", "Twin Room" => "Twin", "Double" => "Double", "Twin" => "Twin", "Standard Queen" => "Double", "Standard Queen." => "Double", "Superior Queen" => "Double"}
 store_room_info(hotels, mappings, true)
 
+
+# client = Client.create_with(display_name: "Godrej", logo: "", logo_2x: "", access_key: "yp3zhb41de0bdc13").find_or_create_by(name: "godrej")
+# hotels_data = [["83807", "Millora Godrej", "SXJGdzZXdWprT0U9", "Gurugram", "Godrej"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# store_room_info(hotels, {}, false)
+# mappings = {"Single" => "Single", "Double" => "Single", "Twin Room" => "Twin", "Queen" => "Single"}
+# store_room_info(hotels, mappings, true)
+
+
+
+# client = Client.create_with(display_name: "Shared", logo: "", logo_2x: "", access_key: "nt34tb49de0b46bd").find_or_create_by(name: "shared")
+# hotels_data = [["83808", "Voltas Kolkata", "V3ViV0dKQTVmMW89", "Kolkata", "Shared"], ["84259", "Millora Cottage Retreat Panchgani", "WEF4MVVoRTJBWDQ9", "Panchgani", "Shared"]]
+# hotels_data = [ ["83036", "Kolkata by Millora (1C)", "V3pyQThjWW1tQUk9", "Kolkata", "Shared"], ["83865", "Millora Mahindra Vicino", "YXpaTGNGOXFkbXc9", "Mumbai", "Shared"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# store_room_info(hotels, {"Double" => "Double"}, true)
+# mappings = {"Double Bed" => "Double", "Twin Bed" => "Twin", "Deluxe Cottage -(King Bed)" => "Double", "Premium Cottage -(King Bed)" => "Double"}
+
+
+# Double
+# King
+# Twin
+
+# mappings = {"Twin Bed" => "Twin", "Double" => "Double", "Twin" => "Twin", "King Size" => "Double"}
+# store_room_info(hotels, {}, true)
+
+
+# client = Client.create_with(display_name: "SKF", logo: "", logo_2x: "", access_key: "nt34tb49de0b46bd").find_or_create_by(name: "skf")
+# hotels_data = [["83040", "SKF", "MnUrQ2JNVG1XZ1E9", "Bangalore", "SKF"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# store_room_info(hotels, {}, false)
+# mappings = {"Single" => "Single", "Double" => "Single", "Twin" => "Twin", "Queen" => "Single"}
+# store_room_info(hotels, {}, true)
+
+
+
+
+
+
+
+# mappings = {"Single" => "Single", "Double" => "Single", "Twin Bed" => "Twin", "King Size" => "Single"}
+# store_room_info(hotels, mappings, true)
+
+
+# client = Client.create_with(display_name: "Wabtec Locomotive Pvt Ltd", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "wabtech")
+# hotels_data = [["78957", "Wabtec-Gooty", "bGY2TXJVZGx2VTA9", "Gooty", "Wabtec Locomotive Pvt Ltd"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# mappings = {"Single" => "Single", "Double" => "Single", "Twin" => "Twin", "Queen" => "Single"}
+# store_room_info(hotels, {}, false)
+
+
+# client = Client.create_with(display_name: "Titan", logo: "titan.png", logo_2x: "titan_2x.png", access_key: "n9aHuWmGR5IOdgxD").find_or_create_by(name: "titan")
+# hotels_data = [["77404", "Millora Jaymahal", "cTdyWk9QS1hjeG89", "Bengaluru", "Titan"], ["77406", "Millora Villa 49 Concorde", "bGMzaEIwNnVMRE09", "Bengaluru", "Titan"], ["77443", "Millora VGN", "b0VGUGsxN2hhUkk9", "Chennai", "Titan"]]
+# hotels_data = [["80154", "Millora Titan, Pune", "TVhyUW03V2FJTVE9", "Pune", "Titan"]]
+# hotels_data = [["80278", "Millora Titan Villa 17, Bangalore", "NjhvZWlyenlYREk9", "Bengaluru", "Titan"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# mappings = {"Single" => "Single", "Queen Size" => "Double", "King Size" => "Double", "Queen Bed" => "Double", "Twin Bed" => "Twin", "Double" => "Double", "Twin" => "Twin"}
+# store_room_info([hotel], mappings, true)
+
+
+# client = Client.create_with(display_name: "Secure Meters", logo: "secure_meters.png", logo_2x: "secure_meters_2x.png", access_key: "S5UhWoTGJjAKYgXt").find_or_create_by(name: "secure_meters")
+# hotels_data = [["77429", "Millora A 7", "ZlJvaDQvR1F6Wkk9", "Gurgaon", "Secure Meter"], ["77432", "Millora C 1303", "YmhZS1hVdkRBNlE9", "Ahmedabad", "Secure Meter"], ["77430", "Millora A 56", "UCtwdVAzVTYzcHM9", "Patna", "Secure Meter"], ["77431", "Millora Shanchi Enclave", "K1BjdXVxeTBHNlE9", "Udaipur", "Secure Meter"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# mappings = {"Executive Room" => "Double", "Deluxe Room" => "Double", "Queen Size" => "Double", "Twin Room" => "Twin", "Double" => "Double", "Twin" => "Twin", "Standard Queen" => "Double", "Standard Queen." => "Double", "Superior Queen" => "Double"}
+# store_room_info(hotels, mappings, true)
+
+# client = Client.create_with(display_name: "Wabtec Locomotive Pvt Ltd", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "wabtech")
+# hotels_data = [["78957", "Wabtec-Gooty", "bGY2TXJVZGx2VTA9", "Gooty", "Wabtec Locomotive Pvt Ltd"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+# mappings = {"Queen Size" => "Double"}
+# store_room_info(hotels, mappings, true)
+
+
+
+# client = Client.create_with(display_name: "Saint Gobain", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "saint-gobain")
+# hotels_data = [["84269", "Millora Saint Gobain", "eEdjTUtBUG9zWDQ9", "Tamilnadu", "Saint Gobain"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+
+# store_room_info(hotels, {}, false)
+# mappings = {"Queen Size" => "Double"}
+# store_room_info(hotels, mappings, true)
+
+#  node /home/millora/staging/millora_app_hotelogix/releases/20231017063524/lib/scripts/wsauth_login.js true '50BAE374AAE57673632485D95B365684FD71A3AA' '672B68383027B7384D389B99B7F873E563317329' '84269' 'eEdjTUtBUG9zWDQ9' 'millora.api@millora.com' 'Support@12345' '/home/millora/staging/millora_app_hotelogix/shared/public/api_keys/1748156551_34.json'
+
+
+
+
+# client = Client.create_with(display_name: "Voltas", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "voltas")
+# hotels_data = [["83808", "Voltas Kolkata", "V3ViV0dKQTVmMW89", "Kolkata", "Shared"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+
+# store_room_info(hotels, {}, false)
+# mappings = {"Double Bed" => "Double", "Twin Bed" => "Double"}
+# store_room_info(hotels, mappings, true)
+
+
+
+# client = Client.create_with(display_name: "L & T", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "lnt")
+# hotels_data = [["84572", "Millora L & T", "ejE5NE1GYUIrazg9", "Gujrat", "L & T"]]
+# hotels = []
+# hotels_data.each do |hotel_data|
+#     hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+#     hotels << hotel
+# end
+
+# store_room_info(hotels, {}, false)
+# mappings = {"Double Bed" => "Double", "Twin Bed" => "Double"}
+# store_room_info(hotels, mappings, true)
+
+
