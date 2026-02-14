@@ -1,0 +1,121 @@
+88993- Millora Cyber Suites
+City -  Sikkim
+Property - Dedicated Guest House
+No of rooms - 4
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+Counter Id: dG5kRUVFSExKOUE9
+
+
+client = Client.create_with(display_name: "Wabtec Locomotive Pvt Ltd", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "wabtech")
+hotels_data = [["88993", "Millora Cyber Suites", "dG5kRUVFSExKOUE9", "Sikkim", "Wabtec Locomotive Pvt Ltd"]]
+hotels = []
+hotels_data.each do |hotel_data|
+    hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+    hotels << hotel
+end
+store_room_info(hotels, {}, false)
+mappings = {"Deluxe" => "Double", "Executive" => "Double"}
+store_room_info(hotels, mappings, true)
+
+
+
+86590
+City - 
+Property - shared
+No of rooms - 30 Rooms ( 10 Premium Twin,   12 Luxury KIng and 8 Premium Double)
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+Counter Id: 
+
+88576
+City 
+Property - Shared
+No of Rooms - 3 Rooms ( 1 Twin and 2 Queen )
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+Counter Id: 
+
+
+
+
+client = Client.create_with(display_name: "Shared", logo: "", logo_2x: "", access_key: "nt34tb49de0b46bd").find_or_create_by(name: "shared")
+hotels_data = [["83808", "Voltas Kolkata", "V3ViV0dKQTVmMW89", "Kolkata", "Shared"], ["84259", "Millora Cottage Retreat Panchgani", "WEF4MVVoRTJBWDQ9", "Panchgani", "Shared"]]
+hotels_data = [ ["83036", "Kolkata by Millora (1C)", "V3pyQThjWW1tQUk9", "Kolkata", "Shared"], ["83865", "Millora Mahindra Vicino", "YXpaTGNGOXFkbXc9", "Mumbai", "Shared"]]
+hotels_data = [ ["86590", "Millora Cyber Suites", "cis5Y0xKaHI0SzA9", "Gurugram", "Shared"], ["88576", "Mahindra Vicino (Shared)", "cmgra3Zmc1M0NkE9", "Mumbai", "Shared"]]
+hotels = []
+hotels_data.each do |hotel_data|
+    hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+    hotels << hotel
+end
+store_room_info(hotels, {"Double" => "Double"}, false)
+mappings = {"Double Bed" => "Double", "Twin Bed" => "Twin", "Deluxe Cottage -(King Bed)" => "Double", "Premium Cottage -(King Bed)" => "Double"}
+
+
+
+
+86156 - 
+City - 
+Property - Dedicated
+No of rooms - 3 Rooms ( All King Bed)
+User:  millora.api@millora.com
+Counter Id: 
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+
+
+
+88577- Saint Gobain Chennai 503
+City - Chennai
+Property - Dedicated
+4 Rooms( KIng Size)
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+Counter Id: 
+
+
+
+client = Client.create_with(display_name: "Saint Gobain", logo: "", logo_2x: "", access_key: SecureRandom.hex(10)[0..15]).find_or_create_by(name: "saint-gobain")
+hotels_data = [["84269", "Millora Saint Gobain", "eEdjTUtBUG9zWDQ9", "Tamilnadu", "Saint Gobain"]]
+hotels_data = [["86156", "Saint Gobain Mumbai 402", "OHN3ZnVoWThpbnc9", "Mumbai", "Saint Gobain"], ["88577", "Saint Gobain Chennai 503", "cmgra3Zmc1M0NkE9", "Chennai", "Saint Gobain"]]
+hotels = []
+hotels_data.each do |hotel_data|
+    hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+    hotels << hotel
+end
+
+store_room_info(hotels, {}, false)
+mappings = {"Double Bed ( King Size)" => "Double"}
+store_room_info(hotels, mappings, true)
+
+
+Company 
+
+Property Name Phoenix Marketcity
+City Mumbai
+
+No of rooms 8
+
+7 single
+1 Twin (with separate occupancy)
+
+Property ID 80442
+User:  millora.api@millora.com
+Consumer Key : 50BAE374AAE57673632485D95B365684FD71A3AA
+Consumer Secret : 672B68383027B7384D389B99B7F873E563317329
+Counter Id:  Z0k3c0xSd3lxTjg9
+
+
+This is a new company - so will need the URL to check availability to
+
+
+
+client = Client.create_with(display_name: "Phoenix Mills", logo: "", logo_2x: "", access_key: "P5UhNoxGJMAKCgXt").find_or_create_by(name: "phoenix_mills")
+hotels_data = [["80442", "Phoenix Marketcity", "Z0k3c0xSd3lxTjg9", "Mumbai", "Phoenix Mills"]]
+hotels = []
+hotels_data.each do |hotel_data|
+    hotel = Hotel.create_with(name: hotel_data[1], company: hotel_data[4], location: hotel_data[3], hlx_username: "test", hlx_consumer_key: "50BAE374AAE57673632485D95B365684FD71A3AA", hlx_consumer_secret: "672B68383027B7384D389B99B7F873E563317329", hlx_counter_id: hotel_data[2], hlx_counter_name: "Default Counter", hlx_counter_email: "millora.api@millora.com", hlx_counter_pwd: "Support@12345", hlx_access_key: nil, hlx_access_secret: nil, client_id: client.id).find_or_create_by(hlx_hotel_id: hotel_data[0])
+    hotels << hotel
+end
+mappings = {"Executive Room" => "Double", "Deluxe Room" => "Double", "Queen Size" => "Double", "Twin Room" => "Twin", "Double" => "Double", "Twin" => "Twin", "Standard Queen" => "Double", "Standard Queen." => "Double", "Superior Queen" => "Double", "Double Bed" => "Single", "Twin Bed" => "Twin"}
+store_room_info(hotels, mappings, true)
